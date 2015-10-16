@@ -27,6 +27,17 @@ message BlobProtoVector {
   repeated BlobProto blobs = 1;
 }
 
+// Message that stores parameters used by BN (Batch Normalization)  layer
+message BNParameter {
+  enum BNMode {
+    LEARN = 0;
+    INFERENCE = 1;
+  }
+  optional BNMode bn_mode = 3 [default = LEARN];
+  optional FillerParameter scale_filler = 1;  // The filler for the scale
+  optional FillerParameter shift_filler = 2;  // The filler for the shift
+}
+
 message Datum {
   optional int32 channels = 1;
   optional int32 height = 2;
@@ -38,6 +49,16 @@ message Datum {
   repeated float float_data = 6;
   // If true data contains an encoded image that need to be decoded
   optional bool encoded = 7 [default = false];
+}
+
+// Message that stores parameters used by EltwiseAccuracyLayer
+message EltwiseAccuracyParameter {
+  // When computing Eltwise Accuracy, count as correct by comparing the true label to
+  // the top k scoring classes.  By default, only compare to the top scoring
+  // class (i.e. argmax).
+  optional uint32 top_k = 1 [default = 1];
+  // If specified, ignore instances with the given label.
+  optional int32 ignore_label = 2;
 }
 
 message FillerParameter {
@@ -387,6 +408,8 @@ message LayerParameter {
   optional WindowDataParameter window_data_param = 129;
 
   optional MultiStageMeanfieldParameter multi_stage_meanfield_param = 44;
+  optional BNParameter bn_param = 45;
+  optional EltwiseAccuracyParameter eltwise_accuracy_param = 46;
 }
 
 // Message that stores parameters used to apply transformation
@@ -1085,6 +1108,9 @@ message V1LayerParameter {
 
     CROP = 40;
     MULTI_STAGE_MEANFIELD = 42;
+    BN = 43;
+    ELTWISE_ACCURACY = 44;
+    SOFTMAX_LOSS_BALANCED = 45;
   }
   optional LayerType type = 5;
   repeated BlobProto blobs = 6;
