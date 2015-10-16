@@ -149,6 +149,6 @@ void SoftmaxWithLossBalancedLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*
 }
 
 INSTANTIATE_CLASS(SoftmaxWithLossBalancedLayer);
-REGISTER_LAYER_CLASS(SoftmaxWithLossBalancedLayer);
+REGISTER_LAYER_CLASS(SoftmaxWithLossBalanced);
 
 }  // namespace caffe
