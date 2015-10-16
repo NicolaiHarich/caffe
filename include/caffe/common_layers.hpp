@@ -105,10 +105,10 @@ class BNLayer : public Layer<Dtype> {
 
   virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
-  //virtual inline const char* type() const { return "BN"; }
-  virtual inline LayerParameter_LayerType type() const {
-    return LayerParameter_LayerType_BN;
-  }
+  virtual inline const char* type() const { return "BN"; }
+//  virtual inline LayerParameter_LayerType type() const {
+//    return LayerParameter_LayerType_BN;
+//  }
   virtual inline int ExactNumBottomBlobs() const { return 1; }
   virtual inline int MinTopBlobs() const { return 1; }
   // if the BNMode is "LEARN" maximum 3 top blobs are available

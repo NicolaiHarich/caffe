@@ -117,9 +117,10 @@ class EltwiseAccuracyLayer : public Layer<Dtype> {
   virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
 
-  virtual inline LayerParameter_LayerType type() const {
-    return LayerParameter_LayerType_ELTWISE_ACCURACY;
-  }
+//  virtual inline LayerParameter_LayerType type() const {
+//    return LayerParameter_LayerType_ELTWISE_ACCURACY;
+//  }
+  virtual inline const char* type() const { return "EltwiseAccuracy"; }
 
   virtual inline int ExactNumBottomBlobs() const { return 2; }
   virtual inline int ExactNumTopBlobs() const { return 1; }
@@ -861,9 +862,11 @@ class SoftmaxWithLossBalancedLayer : public LossLayer<Dtype> {
   virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
 
-  virtual inline LayerParameter_LayerType type() const {
-    return LayerParameter_LayerType_SOFTMAX_LOSS;
-  }
+//  virtual inline LayerParameter_LayerType type() const {
+//    return LayerParameter_LayerType_SOFTMAX_LOSS;
+//  }
+  virtual inline const char* type() const { return "SoftmaxWithLossBalanced"; }
+
   virtual inline int ExactNumBottomBlobs() const { return -1; }
   virtual inline int MinBottomBlobs() const { return 2; }
   virtual inline int MaxBottomBlobs() const { return 3; }
