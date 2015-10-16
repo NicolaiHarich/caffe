@@ -925,6 +925,12 @@ const char* UpgradeV1LayerType(const V1LayerParameter_LayerType type) {
     return "Crop";
   case V1LayerParameter_LayerType_MULTI_STAGE_MEANFIELD:
     return "MultiStageMeanfield";
+  case V1LayerParameter_LayerType_BN:
+    return "BN";
+  case V1LayerParameter_LayerType_ELTWISE_ACCURACY:
+    return "EltwiseAccuracy";
+  case V1LayerParameter_LayerType_SOFTMAX_LOSS_BALANCED:
+    return "SoftmaxWithLossBalanced";
   default:
     LOG(FATAL) << "Unknown V1LayerParameter layer type: " << type;
     return "";
