@@ -1156,6 +1156,8 @@ message V1LayerParameter {
   optional V0LayerParameter layer = 1;
 
   optional MultiStageMeanfieldParameter multi_stage_meanfield_param = 44;
+  optional BNParameter bn_param = 45;
+  optional EltwiseAccuracyParameter eltwise_accuracy_param = 46;
 }
 
 // DEPRECATED: V0LayerParameter is the old way of specifying layer parameters
