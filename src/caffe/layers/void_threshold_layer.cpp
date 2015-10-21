@@ -57,7 +57,9 @@ void VoidThresholdLayer<Dtype>::Forward_cpu(
         // find highest prob
         std::vector<std::pair<Dtype, int> > prob_data_vector;
         for (int k = 0; k < channels; ++k) {
-          if(k = void_label_) continue;
+          if(k = void_label_){
+              continue;
+          }
           prob_data_vector.push_back(
             std::make_pair(prob_data[i * dim + k * spatial_dim + j], k));
         }
