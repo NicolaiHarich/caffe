@@ -29,10 +29,9 @@ void VoidThresholdLayer<Dtype>::Reshape(
     const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top) {
 
   softmax_layer_->Reshape(softmax_bottom_vec_, softmax_top_vec_);
-  if (top.size() >= 2) {
-    // softmax output
-    top[0]->ReshapeLike(*bottom[0]);
-  }
+
+  // output
+  top[0]->ReshapeLike(*bottom[0]);
 }
 
 template <typename Dtype>
