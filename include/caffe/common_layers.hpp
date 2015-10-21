@@ -785,7 +785,7 @@ class VoidThresholdLayer : public Layer<Dtype> {
 
   virtual inline const char* type() const { return "VoidThreshold"; }
   virtual inline int ExactNumBottomBlobs() const { return 2; }
-  virtual inline int ExactNumTopBlobs() const { return 1; }
+  virtual inline int ExactNumTopBlobs() const { return 2; }
 
  protected:
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
@@ -795,12 +795,6 @@ class VoidThresholdLayer : public Layer<Dtype> {
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom) {
     NOT_IMPLEMENTED;
   }
-
-  shared_ptr<SoftmaxLayer<Dtype> > softmax_layer_;
-
-  Blob<Dtype> prob_;
-  vector<Blob<Dtype>*> softmax_top_vec_;
-  vector<Blob<Dtype>*> softmax_bottom_vec_;
 
   Dtype thresh_;
   int void_label_;
