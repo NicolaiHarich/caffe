@@ -768,6 +768,41 @@ class TileLayer : public Layer<Dtype> {
   unsigned int axis_, tiles_, outer_dim_, inner_dim_;
 };
 
+/**
+ *
+ * NOTE: does not implement Backwards operation.
+ */
+template <typename Dtype>
+class VoidThresholdLayer : public Layer<Dtype> {
+ public:
+
+  explicit VoidThresholdLayer(const LayerParameter& param)
+      : Layer<Dtype>(param) {}
+  virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+  virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+
+  virtual inline const char* type() const { return "VoidThreshold"; }
+  virtual inline int ExactNumBottomBlobs() const { return 1; }
+  virtual inline int ExactNumTopBlobs() const { return 1; }
+
+ protected:
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+  /// @brief Not implemented
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom) {
+    NOT_IMPLEMENTED;
+  }
+
+  vector<Blob<Dtype>*> softmax_top_vec_;
+  vector<Blob<Dtype>*> softmax_bottom_vec_;
+
+  Dtype thresh_;
+  int void_label_;
+};
+
 }  // namespace caffe
 
 #endif  // CAFFE_COMMON_LAYERS_HPP_

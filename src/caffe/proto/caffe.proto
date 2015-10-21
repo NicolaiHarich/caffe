@@ -410,6 +410,7 @@ message LayerParameter {
   optional MultiStageMeanfieldParameter multi_stage_meanfield_param = 44;
   optional BNParameter bn_param = 45;
   optional EltwiseAccuracyParameter eltwise_accuracy_param = 46;
+  optional VoidThresholdParameter void_threshold_param = 47;
 }
 
 // Message that stores parameters used to apply transformation
@@ -1060,6 +1061,11 @@ message SPPParameter {
   optional Engine engine = 6 [default = DEFAULT];
 }
 
+message VoidThresholdParameter {
+  optional float thresh_ = 1 [default = 0.7];
+  optional int32 void_label_ = 2 [default = 0];
+}
+
 // DEPRECATED: use LayerParameter.
 message V1LayerParameter {
   repeated string bottom = 2;
@@ -1114,6 +1120,7 @@ message V1LayerParameter {
     BN = 43;
     ELTWISE_ACCURACY = 44;
     SOFTMAX_LOSS_BALANCED = 45;
+    VOID_THRESHOLD = 46;
   }
   optional LayerType type = 5;
   repeated BlobProto blobs = 6;
@@ -1161,6 +1168,7 @@ message V1LayerParameter {
   optional MultiStageMeanfieldParameter multi_stage_meanfield_param = 44;
   optional BNParameter bn_param = 45;
   optional EltwiseAccuracyParameter eltwise_accuracy_param = 46;
+  optional VoidThresholdParameter void_threshold_param = 47;
 }
 
 // DEPRECATED: V0LayerParameter is the old way of specifying layer parameters
