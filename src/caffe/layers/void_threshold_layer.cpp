@@ -49,6 +49,7 @@ void VoidThresholdLayer<Dtype>::Forward_cpu(
   int num = prob_.num();
   int dim = prob_.count() / num;
   int spatial_dim = prob_.height() * prob_.width();
+  int channels = bottom[0]->channels();
 
   for (int i = 0; i < num; ++i) {
     for (int j = 0; j < spatial_dim; j++) {
@@ -56,12 +57,12 @@ void VoidThresholdLayer<Dtype>::Forward_cpu(
         // find highest prob
         std::vector<std::pair<Dtype, int> > prob_data_vector;
         for (int k = 0; k < channels; ++k) {
-          if(k = void_label) continue;
+          if(k = void_label_) continue;
           prob_data_vector.push_back(
             std::make_pair(prob_data[i * dim + k * spatial_dim + j], k));
         }
         std::partial_sort(
-            prob_data_vector.begin(), prob_data_vector.begin() + top_k_,
+            prob_data_vector.begin(), prob_data_vector.begin() + 1,
             prob_data_vector.end(), std::greater<std::pair<Dtype, int> >());
 
         // check if max. prob is greater than threshold
