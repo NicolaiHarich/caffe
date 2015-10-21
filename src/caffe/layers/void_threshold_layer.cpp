@@ -41,6 +41,7 @@ void VoidThresholdLayer<Dtype>::Forward_cpu(
     const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top) {
 
   const Dtype* prob_data = bottom[0]->cpu_data();
+  const Dtype* score_data = bottom[1]->cpu_data();
   Dtype* top_data = top[0]->mutable_cpu_data();
 
   // Softmax normalization
@@ -74,9 +75,9 @@ void VoidThresholdLayer<Dtype>::Forward_cpu(
         // check if max. prob is greater than threshold
         if (prob_data_vector[0].first < thresh_) {
             //set void_label-probabilty to 1
-            top_data[i * dim + void_label_ * spatial_dim + j] = 1;
-            //const Dtype best_score = bottom_data[i * dim + prob_data_vector[0].second * spatial_dim + j];
-            //top_data[i * dim + void_label_ * spatial_dim + j] = best_score + 1;
+            //top_data[i * dim + void_label_ * spatial_dim + j] = 1;
+            const Dtype best_score = score_data[i * dim + prob_data_vector[0].second * spatial_dim + j];
+            top_data[i * dim + void_label_ * spatial_dim + j] = best_score + 1;
         }
     }
   }
