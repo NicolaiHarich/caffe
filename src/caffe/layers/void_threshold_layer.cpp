@@ -24,18 +24,18 @@ void VoidThresholdLayer<Dtype>::Reshape(
 
   // output
   top[0]->ReshapeLike(*bottom[0]);
-  top[1]->ReshapeLike(*bottom[1]);
+  //top[1]->ReshapeLike(*bottom[1]);
 }
 
 template <typename Dtype>
 void VoidThresholdLayer<Dtype>::Forward_cpu(
     const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top) {
 
-  const Dtype* score_data = bottom[0]->cpu_data();
-  Dtype* score_top_data = top[0]->mutable_cpu_data();
+  //const Dtype* score_data = bottom[0]->cpu_data();
+  //Dtype* score_top_data = top[0]->mutable_cpu_data();
 
-  const Dtype* prob_data = bottom[1]->cpu_data();
-  Dtype* prob_top_data = top[1]->mutable_cpu_data();
+  const Dtype* prob_data = bottom[0]->cpu_data();
+  Dtype* prob_top_data = top[0]->mutable_cpu_data();
 
   int num = bottom[0]->num();
   int dim = bottom[0]->count() / num;
@@ -62,8 +62,9 @@ void VoidThresholdLayer<Dtype>::Forward_cpu(
         if (prob_data_vector[0].first < thresh_) {
             //set void_label-probabilty to 1
             prob_top_data[i * dim + void_label_ * spatial_dim + j] = 1;
-            const Dtype best_score = score_data[i * dim + prob_data_vector[0].second * spatial_dim + j];
-            score_top_data[i * dim + void_label_ * spatial_dim + j] = best_score + 1;
+
+            //const Dtype best_score = score_data[i * dim + prob_data_vector[0].second * spatial_dim + j];
+            //score_top_data[i * dim + void_label_ * spatial_dim + j] = best_score + 1;
         }
     }
   }
