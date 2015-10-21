@@ -31,15 +31,17 @@ void VoidThresholdLayer<Dtype>::Reshape(
   softmax_layer_->Reshape(softmax_bottom_vec_, softmax_top_vec_);
 
   // output
-  top[0]->ReshapeLike(*bottom[0]);
+  //top[0]->ReshapeLike(*bottom[0]);
+  top[0]->Reshape(bottom[0]->num(), bottom[0]->channels(),
+        bottom[0]->height(), bottom[0]->width());
 }
 
 template <typename Dtype>
 void VoidThresholdLayer<Dtype>::Forward_cpu(
     const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top) {
 
-    //const Dtype* bottom_data = bottom[0]->cpu_data();
-    Dtype* top_data = top[0]->mutable_cpu_data();
+  const Dtype* bottom_data = bottom[0]->cpu_data();
+  Dtype* top_data = top[0]->mutable_cpu_data();
 
   // Softmax normalization
   softmax_layer_->Forward(softmax_bottom_vec_, softmax_top_vec_);
@@ -70,7 +72,8 @@ void VoidThresholdLayer<Dtype>::Forward_cpu(
         if (prob_data_vector[0].first < thresh_) {
             //set void_label-probabilty to 1
             //prob_data[i * dim + void_label_ * spatial_dim + j] = 1;
-            top_data[i * dim + void_label_ * spatial_dim + j] = prob_data_vector[0].first + 1;
+            const DType best_score = bottom_data[i * dim + prob_data_vector[0].second * spatial_dim + j];
+            top_data[i * dim + void_label_ * spatial_dim + j] = best_score + 1;
         }
     }
   }
