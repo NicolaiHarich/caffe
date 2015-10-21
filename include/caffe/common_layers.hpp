@@ -795,7 +795,7 @@ class VoidThresholdLayer : public Layer<Dtype> {
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom) {
     NOT_IMPLEMENTED;
   }
-
+  Blob<Dtype> prob_;
   vector<Blob<Dtype>*> softmax_top_vec_;
   vector<Blob<Dtype>*> softmax_bottom_vec_;
 
