@@ -1062,8 +1062,8 @@ message SPPParameter {
 }
 
 message VoidThresholdParameter {
-  optional float thresh_ = 1 [default = 0.7];
-  optional int32 void_label_ = 2 [default = 0];
+  optional float threshold = 1 [default = 0.7];
+  optional int32 void_label = 2 [default = 0];
 }
 
 // DEPRECATED: use LayerParameter.
