@@ -83,9 +83,10 @@ void SoftmaxWithLossBalancedLayer<Dtype>::Forward_cpu(
         class_scale_vec[i] = 1/class_scale_vec[i];    //invert
         loss += accum_loss[i] * class_scale_vec[i];	//scale by class frequency
         ++num_classes_in_batch;
-	} else {
+        //LOG(INFO) << "class: "<<i;
+    } else {
         class_scale_vec[i] = 0;
-	}
+    }
   }
   
   if (normalize_) {

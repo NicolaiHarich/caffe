@@ -62,14 +62,18 @@ void MultiStageMeanfieldLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bot
 
     // Initialize the kernels weights. The two files spatial.par and bilateral.par should be available.
     FILE * pFile;
-    pFile = fopen("spatial.par", "r");
+    //pFile = fopen("spatial.par", "r");
+    string pFile_path= meanfield_param.spatial_filter_file();
+    pFile = fopen(pFile_path.c_str(), "r");
     CHECK(pFile) << "The file 'spatial.par' is not found. Please create it with initial spatial kernel weights.";
     for (int i = 0; i < channels_; i++) {
       fscanf(pFile, "%lf", &this->blobs_[0]->mutable_cpu_data()[i * channels_ + i]);
     }
     fclose(pFile);
 
-    pFile = fopen("bilateral.par", "r");
+    //pFile = fopen("bilateral.par", "r");
+    pFile_path= meanfield_param.bilateral_filter_file();
+    pFile = fopen(pFile_path.c_str(), "r");
     CHECK(pFile) << "The file 'bilateral.par' is not found. Please create it with initial bilateral kernel weights.";
     for (int i = 0; i < channels_; i++) {
       fscanf(pFile, "%lf", &this->blobs_[1]->mutable_cpu_data()[i * channels_ + i]);

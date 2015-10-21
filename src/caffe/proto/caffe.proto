@@ -565,6 +565,9 @@ message MultiStageMeanfieldParameter {
 
   optional float forced_spatial_filter_weight = 9;
   optional float forced_bilateral_filter_weight = 10;
+
+  optional string spatial_filter_file = 11  [default = 'spatial.par'];
+  optional string bilateral_filter_file = 12 [default = 'bilateral.par'];
 }
 
 message DataParameter {
