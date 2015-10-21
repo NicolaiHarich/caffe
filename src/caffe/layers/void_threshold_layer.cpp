@@ -40,7 +40,7 @@ template <typename Dtype>
 void VoidThresholdLayer<Dtype>::Forward_cpu(
     const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top) {
 
-  Dtype* prob_data = bottom[0]->cpu_data();
+  const Dtype* prob_data = bottom[0]->cpu_data();
   Dtype* top_data = top[0]->mutable_cpu_data();
 
   // Softmax normalization
