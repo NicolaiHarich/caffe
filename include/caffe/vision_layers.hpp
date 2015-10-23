@@ -692,6 +692,9 @@ class MeanfieldIteration {
       const vector<shared_ptr<ModifiedPermutohedral> >* const bilateral_lattices,
       const Blob<Dtype>* const bilateral_norms);
 
+
+  virtual inline const char* type() const { return "MultiStageMeanfield"; }
+
   /**
    * Forward pass - to be called during inference.
    */
