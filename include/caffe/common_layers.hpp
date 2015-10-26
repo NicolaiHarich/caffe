@@ -431,7 +431,7 @@ class FirstSecRatioLayer : public Layer<Dtype> {
    *     if set, maximise along the specified axis else maximise the flattened
    *     trailing dimensions for each index of the first / num dimension.
    */
-  explicit FirstSecRatio(const LayerParameter& param)
+  explicit FirstSecRatioLayer(const LayerParameter& param)
       : Layer<Dtype>(param) {}
   virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
