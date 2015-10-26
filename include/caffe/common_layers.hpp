@@ -458,8 +458,6 @@ class FirstSecRatioLayer : public Layer<Dtype> {
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom) {
     NOT_IMPLEMENTED;
   }
-  bool has_axis_;
-  int axis_;
 };
 
 /**
