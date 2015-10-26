@@ -931,6 +931,8 @@ const char* UpgradeV1LayerType(const V1LayerParameter_LayerType type) {
     return "EltwiseAccuracy";
   case V1LayerParameter_LayerType_SOFTMAX_LOSS_BALANCED:
     return "SoftmaxWithLossBalanced";
+  case V1LayerParameter_LayerType_FIRST_SEC_RATIO:
+    return "FirstSecRatio";
   default:
     LOG(FATAL) << "Unknown V1LayerParameter layer type: " << type;
     return "";
