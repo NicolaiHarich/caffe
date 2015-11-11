@@ -66,6 +66,7 @@ void FirstSecRatioLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
     const Dtype* bottom_data = bottom[0]->cpu_data();
     Dtype* bottom_diff = bottom[0]->mutable_cpu_diff();
     caffe_cpu_sign(count, bottom_data, bottom_diff);
+    // elementwise multiplication
     caffe_mul(count, bottom_diff, top_diff, bottom_diff);
   }
 }

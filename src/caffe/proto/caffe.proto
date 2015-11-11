@@ -1115,6 +1115,7 @@ message V1LayerParameter {
     ELTWISE_ACCURACY = 44;
     SOFTMAX_LOSS_BALANCED = 45;
     FIRST_SEC_RATIO = 46;
+    PRELU = 47;
   }
   optional LayerType type = 5;
   repeated BlobProto blobs = 6;
@@ -1162,6 +1163,7 @@ message V1LayerParameter {
   optional MultiStageMeanfieldParameter multi_stage_meanfield_param = 44;
   optional BNParameter bn_param = 45;
   optional EltwiseAccuracyParameter eltwise_accuracy_param = 46;
+  optional PReLUParameter prelu_param = 47;
 }
 
 // DEPRECATED: V0LayerParameter is the old way of specifying layer parameters
