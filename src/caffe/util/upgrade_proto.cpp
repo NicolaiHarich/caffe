@@ -899,6 +899,8 @@ const char* UpgradeV1LayerType(const V1LayerParameter_LayerType type) {
     return "Pooling";
   case V1LayerParameter_LayerType_POWER:
     return "Power";
+  case V1LayerParameter_LayerType_PRELU:
+    return "PReLU";
   case V1LayerParameter_LayerType_RELU:
     return "ReLU";
   case V1LayerParameter_LayerType_SIGMOID:
