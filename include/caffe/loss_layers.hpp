@@ -824,6 +824,85 @@ class SoftmaxWithLossLayer : public LossLayer<Dtype> {
   int softmax_axis_, outer_num_, inner_num_;
 };
 
+/**
+ * @brief Variant of SoftmaxWithLossLayer which takes 2 label-blobs as input.
+ *
+ * @param bottom input Blob vector (length 2)
+ *   -# @f$ (N \times C \times H \times W) @f$
+ *      the predictions @f$ x @f$, a Blob with values in
+ *      @f$ [-\infty, +\infty] @f$ indicating the predicted score for each of
+ *      the @f$ K = CHW @f$ classes. This layer maps these scores to a
+ *      probability distribution over classes using the softmax function
+ *      @f$ \hat{p}_{nk} = \exp(x_{nk}) /
+ *      \left[\sum_{k'} \exp(x_{nk'})\right] @f$ (see SoftmaxLayer).
+ *   -# @f$ (N \times 1 \times 1 \times 1) @f$
+ *      the labels @f$ l @f$, an integer-valued Blob with values
+ *      @f$ l_n \in [0, 1, 2, ..., K - 1] @f$
+ *      indicating the correct class label among the @f$ K @f$ classes
+ *   -# @f$ (N \times 1 \times 1 \times 1) @f$
+ *      the labels @f$ l @f$, an integer-valued Blob with values
+ *      @f$ l_n \in [0, 1, 2, ..., K - 1] @f$
+ *      indicating the correct class label among the @f$ K @f$ classes
+ * @param top output Blob vector (length 1)
+ *   -# @f$ (1 \times 1 \times 1 \times 1) @f$
+ *      the computed cross-entropy classification loss: @f$ E =
+ *        \frac{-1}{N} \sum\limits_{n=1}^N \log(\hat{p}_{n,l_n})
+ *   -# @f$ (1 \times 1 \times 1 \times 1) @f$
+ *      the computed cross-entropy classification loss2: @f$ E =
+ *        \frac{-1}{N} \sum\limits_{n=1}^N \log(\hat{p}_{n,l_n})
+ *      @f$, for softmax output class probabilites @f$ \hat{p} @f$
+ */
+template <typename Dtype>
+class SoftmaxWithLoss2GtLayer : public LossLayer<Dtype> {
+ public:
+   /**
+    * @param param provides LossParameter loss_param, with options:
+    *  - ignore_label (optional)
+    *    Specify a label value that should be ignored when computing the loss.
+    *  - normalize (optional, default true)
+    *    If true, the loss is normalized by the number of (nonignored) labels
+    *    present; otherwise the loss is simply summed over spatial locations.
+    */
+  explicit SoftmaxWithLoss2GtLayer(const LayerParameter& param)
+      : LossLayer<Dtype>(param) {}
+  virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+  virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+
+  virtual inline const char* type() const { return "SoftmaxWithLoss2Gt"; }
+  virtual inline int ExactNumTopBlobs() const { return -1; }
+  virtual inline int MinTopBlobs() const { return 2; }
+  virtual inline int MaxTopBlobs() const { return 3; }
+
+ protected:
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+  virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
+  virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
+
+  /// The internal SoftmaxLayer used to map predictions to a distribution.
+  shared_ptr<Layer<Dtype> > softmax_layer_;
+  /// prob stores the output probability predictions from the SoftmaxLayer.
+  Blob<Dtype> prob_;
+  /// bottom vector holder used in call to the underlying SoftmaxLayer::Forward
+  vector<Blob<Dtype>*> softmax_bottom_vec_;
+  /// top vector holder used in call to the underlying SoftmaxLayer::Forward
+  vector<Blob<Dtype>*> softmax_top_vec_;
+  /// Whether to ignore instances with a certain label.
+  bool has_ignore_label_;
+  /// The label indicating that an instance should be ignored.
+  int ignore_label_;
+  /// Whether to normalize the loss by the total number of values present
+  /// (otherwise just by the batch size).
+  bool normalize_;
+
+  int softmax_axis_, outer_num_, inner_num_;
+};
 
 /**
  * @brief Computes the multinomial logistic loss for a one-of-many

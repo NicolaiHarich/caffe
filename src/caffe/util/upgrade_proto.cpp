@@ -933,6 +933,8 @@ const char* UpgradeV1LayerType(const V1LayerParameter_LayerType type) {
     return "EltwiseAccuracy";
   case V1LayerParameter_LayerType_SOFTMAX_LOSS_BALANCED:
     return "SoftmaxWithLossBalanced";
+  case V1LayerParameter_LayerType_SOFTMAX_LOSS_2GT:
+    return "SoftmaxWithLoss2Gt";
   case V1LayerParameter_LayerType_FIRST_SEC_RATIO:
     return "FirstSecRatio";
   default:

@@ -1116,6 +1116,7 @@ message V1LayerParameter {
     SOFTMAX_LOSS_BALANCED = 45;
     FIRST_SEC_RATIO = 46;
     PRELU = 47;
+    SOFTMAX_LOSS_2GT = 48;
   }
   optional LayerType type = 5;
   repeated BlobProto blobs = 6;
