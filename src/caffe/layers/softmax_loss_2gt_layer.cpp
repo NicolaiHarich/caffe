@@ -149,9 +149,9 @@ void SoftmaxWithLoss2GtLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& to
     const Dtype loss_weight = top[0]->cpu_diff()[0];
     const Dtype loss2_weight = top[1]->cpu_diff()[0];
     if (normalize_) {
-      caffe_scal(prob_.count(), (loss_weight/count + loss2_weight/count2) / 2.0, bottom_diff);
+      caffe_scal(prob_.count(), (loss_weight/count + loss2_weight/count2) / 2, bottom_diff);
     } else {
-      caffe_scal(prob_.count(), (loss_weight + loss2_weight) / (2.0*outer_num_), bottom_diff);
+      caffe_scal(prob_.count(), (loss_weight + loss2_weight) / (2*outer_num_), bottom_diff);
     }
   }
 }
