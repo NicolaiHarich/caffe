@@ -126,7 +126,7 @@ void SoftmaxWithLoss2GtLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& to
         const int label_value = static_cast<int>(label[i * inner_num_ + j]);
         const int label2_value = static_cast<int>(label2[i * inner_num_ + j]);
 
-        if ( has_ignore_label_ && label_value == ignore_label_ && label2_value == ignore_label) {
+        if ( has_ignore_label_ && label_value == ignore_label_ && label2_value == ignore_label_) {
           for (int c = 0; c < bottom[0]->shape(softmax_axis_); ++c) {
             bottom_diff[i * dim + c * inner_num_ + j] = 0;
           }
