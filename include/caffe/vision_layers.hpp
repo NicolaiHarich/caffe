@@ -693,7 +693,7 @@ class MeanfieldIteration {
       const Blob<Dtype>* const bilateral_norms);
 
 
-  virtual inline const char* type() const { return "MultiStageMeanfield"; }
+  virtual inline const char* type() const { return "MeanfieldIteration"; }
 
   /**
    * Forward pass - to be called during inference.
