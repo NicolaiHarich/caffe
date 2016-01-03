@@ -794,6 +794,19 @@ message MVNParameter {
   optional float eps = 3 [default = 1e-9];
 }
 
+// Message that stores parameters used by NormalizeLayer
+message NormalizeParameter {
+  optional bool across_spatial = 1 [default = true];
+  // Initial value of scale. Default is 1.0 for all
+  optional FillerParameter scale_filler = 2;
+  // Whether or not scale parameters are shared across channels.
+  optional bool channel_shared = 3 [default = true];
+  // Whether we learn the scale parameter or fix it
+  optional bool fix_scale = 4 [default = true];
+  // Epsilon for not dividing by zero while normalizing variance
+  optional float eps = 5 [default = 1e-10];
+}
+
 message PoolingParameter {
   enum PoolMethod {
     MAX = 0;
@@ -1114,6 +1127,7 @@ message V1LayerParameter {
     BN = 43;
     ELTWISE_ACCURACY = 44;
     SOFTMAX_LOSS_BALANCED = 45;
+	NORMALIZE = 47;
   }
   optional LayerType type = 5;
   repeated BlobProto blobs = 6;
@@ -1160,7 +1174,8 @@ message V1LayerParameter {
 
   optional MultiStageMeanfieldParameter multi_stage_meanfield_param = 44;
   optional BNParameter bn_param = 45;
-  optional EltwiseAccuracyParameter eltwise_accuracy_param = 46;
+  optional EltwiseAccuracyParameter eltwise_accuracy_param = 46;  
+  optional NormalizeParameter norm_param = 47;
 }
 
 // DEPRECATED: V0LayerParameter is the old way of specifying layer parameters
