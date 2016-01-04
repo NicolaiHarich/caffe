@@ -410,6 +410,7 @@ message LayerParameter {
   optional MultiStageMeanfieldParameter multi_stage_meanfield_param = 44;
   optional BNParameter bn_param = 45;
   optional EltwiseAccuracyParameter eltwise_accuracy_param = 46;
+  optional NormalizeParameter norm_param = 47;
 }
 
 // Message that stores parameters used to apply transformation
@@ -1127,7 +1128,7 @@ message V1LayerParameter {
     BN = 43;
     ELTWISE_ACCURACY = 44;
     SOFTMAX_LOSS_BALANCED = 45;
-	NORMALIZE = 47;
+    NORMALIZE = 47;
   }
   optional LayerType type = 5;
   repeated BlobProto blobs = 6;
@@ -1281,3 +1282,5 @@ message PReLUParameter {
   // Whether or not slope paramters are shared across channels.
   optional bool channel_shared = 2 [default = false];
 }
+
+
